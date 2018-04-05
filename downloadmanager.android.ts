@@ -71,6 +71,7 @@ export class DownloadManager {
 
         let id = this.manager.enqueue(req);
         this.downloads.set(id, cb);
+        return id;
     }
 
     public registerBroadcast() {
