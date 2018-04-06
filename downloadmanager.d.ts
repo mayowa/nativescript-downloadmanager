@@ -28,7 +28,7 @@ export declare class DownloadManager {
     downloads: Map<number, Function>;
     manager: any;
     constructor();
-    downloadFile(url: string, options:DownloadOptions, cb: Function);
+    downloadFile(url: string, options:DownloadOptions, cb: Function):number;
     registerBroadcast(): void;
     private handleDownloadEvent(context, intent);
     unregisterBroadcast(): void;
