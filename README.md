@@ -22,7 +22,7 @@ Usage is pretty much straightforward: This is a commented example on top of a si
 ```TypeScript
 import {Observable} from 'data/observable';
 // Import the class.
-import {DownloadManager} from 'nativescript-downloadmanager'
+import {DownloadManager,DownloadOptions} from 'nativescript-downloadmanager';
 
 export class HelloWorldModel extends Observable {
 
@@ -41,7 +41,14 @@ export class HelloWorldModel extends Observable {
         // Aside from that there are optional parameters for. Directory (always inside android/data/yourapp/),
         // The file name, and title and description for the notification bar. By default it uses the file name 
         // as title, and no description.
-        dm.downloadFile("http://cachefly.cachefly.net/10mb.test", function(result,uri) {
+	let options:DownloadOptions={
+		directory:"download",
+		filename:"testFile",
+		title:"testFile",
+		description:"Downloading Image.",
+		allowScanningByMediaScanner:true,
+	      };
+        dm.downloadFile("http://cachefly.cachefly.net/10mb.test", options,function(result,uri) {
             // result is a boolean, if the download was successful, it will return true
             console.log(result);
             // Uri in file:// format of the downloaded file.
