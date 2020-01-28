@@ -14,12 +14,14 @@ var DownloadManager = (function () {
         this.registerBroadcast();
     }
     DownloadManager.prototype.downloadFile = function (url, options, cb) {
-        var directory = options.directory ? options.directory : 'downloads';
-        var filename = options.filename ? options.filename : url.substring(url.lastIndexOf('/') + 1);
+        var directory = options.directory ? options.directory : "downloads";
+        var filename = options.filename
+            ? options.filename
+            : url.substring(url.lastIndexOf("/") + 1);
         var title = options.title ? options.title : filename;
         var uri = android.net.Uri.parse(url);
         var req = new android.app.DownloadManager.Request(uri);
-        req.setDestinationInExternalFilesDir(Application.android.context, directory, filename);
+        req.setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, directory + "/" + filename);
         req.setTitle(title);
         if (options.description)
             req.setDescription(options.description);
@@ -49,7 +51,9 @@ var DownloadManager = (function () {
     };
     DownloadManager.prototype.handleDownloadEvent = function (context, intent) {
         var query = new android.app.DownloadManager.Query();
-        var id = intent.getExtras().getLong(android.app.DownloadManager.EXTRA_DOWNLOAD_ID);
+        var id = intent
+            .getExtras()
+            .getLong(android.app.DownloadManager.EXTRA_DOWNLOAD_ID);
         var c = this.manager.query(query);
         while (c.moveToNext()) {
             if (c.getLong(c.getColumnIndex(android.app.DownloadManager.COLUMN_ID)) == id) {
